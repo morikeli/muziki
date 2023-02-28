@@ -12,7 +12,7 @@ class MusicPlayer extends StatefulWidget {
 
 class _MusicPlayerState extends State<MusicPlayer> {
   final player = AudioPlayer(); // creates an instance of the music player
-  Duration? duration; // duration
+  Duration? duration = Duration(seconds: 0); // duration
   void initPlayer() async {
     await player.setSource(AssetSource("appetitan.mp3"));
     duration = await player.getDuration();
