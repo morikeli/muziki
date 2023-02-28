@@ -72,7 +72,23 @@ class _MusicPlayerState extends State<MusicPlayer> {
                         color: Colors.lightBlueAccent,
                       )),
                 ],
-              )
+              ),
+              const SizedBox(height: 30.0),
+              Container(
+                width: 50.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(60.0),
+                  color: Colors.blueAccent,
+                  border: Border.all(color: Colors.lightBlueAccent)
+                ),
+                child: InkWell(
+                  onTap: () {
+
+                  },
+                  child: const Icon(Icons.play_arrow, color: Colors.black),
+                ),
+              ),
             ],
           )
         ],
