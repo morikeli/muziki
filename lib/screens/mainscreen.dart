@@ -83,8 +83,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   border: Border.all(color: Colors.lightBlueAccent)
                 ),
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
+                      await player.getDuration();
 
+                      setState(() async {
+                        duration = await player.getDuration();
+                      });
                   },
                   child: const Icon(Icons.play_arrow, color: Colors.black),
                 ),
