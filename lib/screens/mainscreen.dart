@@ -14,7 +14,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
   final player = AudioPlayer();    // creates an instance of the music player
   Duration?duration;    // duration
   void initPlayer() async {
-    await player.setSource(AssetSource("appetitan.mp3")),
+    await player.setSource(AssetSource("appetitan.mp3"));
     duration = await player.getDuration();
   }
 
