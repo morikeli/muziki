@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class MusicPlayer extends StatefulWidget {
@@ -10,6 +11,20 @@ class MusicPlayer extends StatefulWidget {
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
+  final player = AudioPlayer();    // creates an instance of the music player
+  Duration?duration;    // duration
+  void initPlayer() async {
+    await player.setSource(AssetSource("appetitan.mp3")),
+    duration = await player.getDuration();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPlayer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
