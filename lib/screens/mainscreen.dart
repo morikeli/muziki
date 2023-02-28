@@ -11,8 +11,8 @@ class MusicPlayer extends StatefulWidget {
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
-  final player = AudioPlayer();    // creates an instance of the music player
-  Duration?duration;    // duration
+  final player = AudioPlayer(); // creates an instance of the music player
+  Duration? duration; // duration
   void initPlayer() async {
     await player.setSource(AssetSource("appetitan.mp3"));
     duration = await player.getDuration();
@@ -67,7 +67,10 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     value: 0,
                     onChanged: (value) {},
                   ),
-                  const Text("00:00 : 06:00", style: TextStyle(color: Colors.lightBlueAccent)),
+                  Text("${duration!.inMinutes} : ${duration!.inSeconds % 60}",
+                      style: const TextStyle(
+                        color: Colors.lightBlueAccent,
+                      )),
                 ],
               )
             ],
