@@ -89,13 +89,19 @@ class _MusicPlayerState extends State<MusicPlayer> {
                 ),
                 child: InkWell(
                   onTap: () async {
-                      await player.resume();
+                      if (isPlaying) {
+                        await player.pause();
+                        isPlaying = !isPlaying;
+                      }
+                      else {
+                        await player.resume();
 
-                      player.onPositionChanged.listen((position) {
+                        player.onPositionChanged.listen((position) {
                           setState(() {
                             value = position.inSeconds.toDouble();
+                          });
                         });
-                      });
+                      }
                   },
                   child: const Icon(Icons.play_arrow, color: Colors.black),
                 ),
