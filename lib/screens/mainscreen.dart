@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
   bool isPlaying = false;
 
   void initPlayer() async {
-    await player.setSource(AssetSource("assets/music/appetitan.mp3"));
+    await player.setSource(AssetSource("appetitan.mp3"));
     duration = await player.getDuration();
   }
 
@@ -34,8 +33,8 @@ class _MusicPlayerState extends State<MusicPlayer> {
       body: Stack(
         children: [
           Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/bg-images/headphones.jpg"),
                 fit: BoxFit.cover,
@@ -65,12 +64,20 @@ class _MusicPlayerState extends State<MusicPlayer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${(value/60).floor()} : ${(value%60).floor()}", style: TextStyle(color: Colors.lightBlueAccent)),
+                  Text("${(value / 60).floor()} : ${(value % 60).floor()}", style: TextStyle(color: Colors.lightBlueAccent)),
                   Slider.adaptive(
+                    onChanged: (value) {},
                     min: 0.0,
                     max: duration!.inSeconds.toDouble(),
                     value: value,
-                    onChanged: (value) {},
+                    onChangeEnd: (newValue) async {
+                      setState(() {
+                        value = newValue;
+                      });
+                      player.pause();
+                      await player.seek(Duration(seconds: newValue.toInt()));
+                      await player.resume();
+                    },
                   ),
                   Text("${duration!.inMinutes} : ${duration!.inSeconds % 60}",
                       style: const TextStyle(
@@ -82,28 +89,30 @@ class _MusicPlayerState extends State<MusicPlayer> {
               Container(
                 width: 50.0,
                 height: 50.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(60.0),
-                  color: Colors.blueAccent,
-                  border: Border.all(color: Colors.lightBlueAccent)
-                ),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(60.0), color: Colors.blueAccent, border: Border.all(color: Colors.lightBlueAccent)),
                 child: InkWell(
                   onTap: () async {
-                      if (isPlaying) {
-                        await player.pause();
-                        isPlaying = !isPlaying;
-                      }
-                      else {
-                        await player.resume();
-
-                        player.onPositionChanged.listen((position) {
-                          setState(() {
-                            value = position.inSeconds.toDouble();
-                          });
+                    if (isPlaying) {
+                      await player.pause();
+                      setState(() {
+                        isPlaying = false;
+                      });
+                    } else {
+                      await player.resume();
+                      setState(() {
+                        isPlaying = true;
+                      });
+                      player.onPositionChanged.listen((position) {
+                        setState(() {
+                          value = position.inSeconds.toDouble();
                         });
-                      }
+                      });
+                    }
                   },
-                  child: const Icon(Icons.play_arrow, color: Colors.black),
+                  child: Icon(
+                    isPlaying?Icons.play_arrow:Icons.pause,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ],
