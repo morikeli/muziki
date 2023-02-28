@@ -17,7 +17,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
   bool isPlaying = false;
 
   void initPlayer() async {
-    await player.setSource(AssetSource("appetitan.mp3"));
+    await player.setSource(AssetSource("assets/music/appetitan.mp3"));
     duration = await player.getDuration();
   }
 
@@ -65,7 +65,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("00:00", style: TextStyle(color: Colors.lightBlueAccent)),
+                  Text("${(value/60).floor()} : ${(value%60).floor()}", style: TextStyle(color: Colors.lightBlueAccent)),
                   Slider.adaptive(
                     min: 0.0,
                     max: duration!.inSeconds.toDouble(),
@@ -89,11 +89,11 @@ class _MusicPlayerState extends State<MusicPlayer> {
                 ),
                 child: InkWell(
                   onTap: () async {
-                      await player.getDuration();
+                      await player.resume();
 
                       player.onPositionChanged.listen((position) {
-                        setState(() {
-                          value = position.inSeconds.toDouble();
+                          setState(() {
+                            value = position.inSeconds.toDouble();
                         });
                       });
                   },
