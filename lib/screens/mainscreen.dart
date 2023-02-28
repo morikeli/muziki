@@ -13,6 +13,9 @@ class MusicPlayer extends StatefulWidget {
 class _MusicPlayerState extends State<MusicPlayer> {
   final player = AudioPlayer(); // creates an instance of the music player
   Duration? duration = Duration(seconds: 0); // duration
+  double value = 0;
+  bool isPlaying = false;
+
   void initPlayer() async {
     await player.setSource(AssetSource("appetitan.mp3"));
     duration = await player.getDuration();
@@ -64,7 +67,9 @@ class _MusicPlayerState extends State<MusicPlayer> {
                 children: [
                   const Text("00:00", style: TextStyle(color: Colors.lightBlueAccent)),
                   Slider.adaptive(
-                    value: 0,
+                    min: 0.0,
+                    max: duration!.inSeconds.toDouble(),
+                    value: value,
                     onChanged: (value) {},
                   ),
                   Text("${duration!.inMinutes} : ${duration!.inSeconds % 60}",
@@ -86,8 +91,10 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   onTap: () async {
                       await player.getDuration();
 
-                      setState(() async {
-                        duration = await player.getDuration();
+                      player.onPositionChanged.listen((position) {
+                        setState(() {
+                          value = position.inSeconds.toDouble();
+                        });
                       });
                   },
                   child: const Icon(Icons.play_arrow, color: Colors.black),
