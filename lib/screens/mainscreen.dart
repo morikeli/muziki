@@ -47,9 +47,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("00:00", style: TextStyle(color: Colors.white)),
-                  const Text("00:00 : 00:00", style: TextStyle(color: Colors.white)),
-
+                  const Text("00:00", style: TextStyle(color: Colors.lightBlueAccent)),
+                  Slider.adaptive(
+                    value: 0,
+                    onChanged: (value) {},
+                  ),
+                  const Text("00:00 : 06:00", style: TextStyle(color: Colors.lightBlueAccent)),
                 ],
               )
             ],
