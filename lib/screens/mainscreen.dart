@@ -16,7 +16,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
   bool isPlaying = false;
 
   void initPlayer() async {
-    await player.setSource(AssetSource("appetitan.mp3"));
+    await player.setSource(AssetSource("apetitan.mp3"));
     duration = await player.getDuration();
   }
 
