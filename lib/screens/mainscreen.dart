@@ -110,7 +110,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                     }
                   },
                   child: Icon(
-                    isPlaying?Icons.play_arrow:Icons.pause,
+                    isPlaying?Icons.pause:Icons.play_arrow,
                     color: Colors.black,
                   ),
                 ),
